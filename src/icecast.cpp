@@ -20,7 +20,6 @@
 #ifdef _WIN32
  #include <winsock2.h>
  #define usleep(us) Sleep(us/1000)
- #define close(s) closesocket(s)
 #else
  #include <sys/types.h>
  #include <sys/socket.h>
@@ -101,19 +100,19 @@ int ic_connect(void)
         {
             // Try PUT method first. Supported since icecast 2.4.0
             if(cfg.srv[cfg.selected_srv]->mount[0] != '/')
-                snprintf(send_buf, sizeof(send_buf), "PUT /%s HTTP/1.1\r\n", 
+                snprintf(send_buf, sizeof(send_buf), "PUT /%s HTTP/1.1\r\n",
                         cfg.srv[cfg.selected_srv]->mount);
             else
                 snprintf(send_buf, sizeof(send_buf), "PUT %s HTTP/1.1\r\n",
                         cfg.srv[cfg.selected_srv]->mount);
-            
+
             opus_supported = 1;
         }
         else
         {
 
             if(cfg.srv[cfg.selected_srv]->mount[0] != '/')
-                snprintf(send_buf, sizeof(send_buf), "SOURCE /%s HTTP/1.0\r\n", 
+                snprintf(send_buf, sizeof(send_buf), "SOURCE /%s HTTP/1.0\r\n",
                         cfg.srv[cfg.selected_srv]->mount);
             else
                 snprintf(send_buf, sizeof(send_buf), "SOURCE %s HTTP/1.0\r\n",
@@ -143,8 +142,8 @@ int ic_connect(void)
             strcpy(send_buf,  "Content-Type: audio/aac\r\n");
         else
             strcpy(send_buf,  "Content-Type: audio/ogg\r\n");
-        
-        
+
+
         sock_send(&stream_socket, send_buf, strlen(send_buf), SEND_TIMEOUT);
 
 
@@ -174,8 +173,8 @@ int ic_connect(void)
         }
 
 
-        // Send audio settings 
-        snprintf(send_buf, sizeof(send_buf), 
+        // Send audio settings
+        snprintf(send_buf, sizeof(send_buf),
                 "ice-audio-info: "
                 "ice-bitrate=%d;"
                 "ice-channels=%d;"
@@ -228,7 +227,7 @@ int ic_connect(void)
                     return 2;
                     break;
                 case 403:   //mountpoint already in use
-                    usleep(100000); 
+                    usleep(100000);
                     ic_disconnect();
                     return 1;
                     break;
@@ -269,8 +268,8 @@ int ic_connect(void)
                 return 2;
             }
         }
-            
-        
+
+
         break;
     }
 
@@ -341,8 +340,8 @@ int ic_update_song(void)
         strcpy(mount, cfg.srv[cfg.selected_srv]->mount);
 
     snprintf(auth, sizeof(auth), "%s:%s", cfg.srv[cfg.selected_srv]->usr, cfg.srv[cfg.selected_srv]->pwd);
-    
-    
+
+
     if(cfg.srv[cfg.selected_srv]->port == 80)
         snprintf(send_buf, sizeof(send_buf), "Host: %s\r\n", cfg.srv[cfg.selected_srv]->addr);
     else
@@ -356,15 +355,15 @@ int ic_update_song(void)
                                          mount, song_buf, PACKAGE_STRING, util_base64_enc(auth));
 
     sock_send(&web_socket, send_buf, strlen(send_buf), SEND_TIMEOUT);
-    
-    
+
+
     if(cfg.srv[cfg.selected_srv]->port == 80)
         snprintf(send_buf, sizeof(send_buf), "Host: %s\r\n\r\n", cfg.srv[cfg.selected_srv]->addr);
     else
         snprintf(send_buf, sizeof(send_buf), "Host: %s:%d\r\n\r\n", cfg.srv[cfg.selected_srv]->addr, cfg.srv[cfg.selected_srv]->port);
 
     sock_send(&web_socket, send_buf, strlen(send_buf), SEND_TIMEOUT);
-    
+
     sock_close(&web_socket);
     free(song_buf);
     free(mount);
@@ -376,4 +375,3 @@ void ic_disconnect(void)
 {
     sock_close(&stream_socket);
 }
-

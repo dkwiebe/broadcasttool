@@ -34,6 +34,7 @@ int rb_space(struct ringbuf *rb);
 unsigned int rb_read(struct ringbuf *rb, char *dest);
 unsigned int rb_read_len(struct ringbuf *rb, char *dest, unsigned int len);
 
+void rb_clear(struct ringbuf *rb);
 int rb_write(struct ringbuf *rb, char* src, unsigned int size);
 int rb_free(struct ringbuf *rb);
 

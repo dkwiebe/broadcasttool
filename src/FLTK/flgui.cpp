@@ -450,71 +450,6 @@ void flgui::cb_(Fl_Button* o, void* v) {
   ((flgui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb__i(o,v);
 }
 
-static const unsigned char idata_folder[] =
-{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,19,19,0,
-4,4,4,0,2,2,2,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,36,36,
-36,12,4,4,4,58,3,3,3,62,1,1,1,62,0,0,0,61,0,0,0,14,0,0,0,0,0,0,0,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,14,2,2,2,156,1,1,1,105,0,0,0,95,0,0,0,95,
-0,0,0,89,0,0,0,180,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,5,5,5,
-98,5,5,5,123,0,0,0,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,0,0,0,154,0,0,0,
-111,0,0,0,113,0,0,0,113,0,0,0,113,0,0,0,113,0,0,0,118,0,0,0,81,0,0,0,0,0,0,0,5,
-0,0,0,3,5,5,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,85,2,2,2,72,2,2,2,25,0,0,0,2,7,
-7,7,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,15,0,0,0,15,0,0,0,15,0,0,
-0,15,0,0,0,15,0,0,0,1,0,0,0,152,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,95,0,0,0,48,2,2,2,5,4,4,4,3,0,0,0,0,7,7,7,94,3,3,3,140,0,0,0,
-140,0,0,0,141,0,0,0,144,0,0,0,144,0,0,0,144,0,0,0,144,0,0,0,144,0,0,0,144,3,3,3,
-139,6,6,6,196,0,0,0,141,0,0,0,141,0,0,0,138,4,4,4,136,0,0,0,16,0,0,0,0,0,0,0,0,
-0,0,0,96,0,0,0,46,0,0,0,2,0,0,0,0,0,0,0,78,0,0,0,110,0,0,0,0,1,1,1,7,0,0,0,7,
-0,0,0,7,0,0,0,7,0,0,0,7,0,0,0,7,0,0,0,7,1,1,1,7,0,0,0,7,0,0,0,1,2,2,2,7,0,0,0,
-11,0,0,0,0,0,0,0,177,1,1,1,15,0,0,0,0,0,0,0,0,0,0,0,96,0,0,0,45,0,0,0,1,0,0,0,
-0,0,0,0,157,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,0,0,0,105,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,96,0,0,0,46,0,0,0,0,0,0,0,100,0,0,0,57,0,0,0,1,0,0,0,1,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,167,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,96,0,0,0,48,0,0,
-0,14,0,0,0,125,0,0,0,12,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,88,0,0,0,79,0,0,0,0,0,
-0,0,1,0,0,0,0,0,0,0,0,0,0,0,97,0,0,0,46,0,0,0,68,0,0,0,95,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,2,0,0,0,11,0,0,0,127,0,0,0,18,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,
-0,0,36,0,0,0,166,0,0,0,0,0,0,0,0,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,0,2,2,
-2,0,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,0,1,1,1,1,1,1,1,2,0,0,0,50,0,0,0,111,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,81,10,10,10,152,0,0,0,71,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,3,0,0,0,0,0,0,0,160,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,6,6,6,91,4,4,4,196,0,0,0,13,4,4,4,23,3,3,3,20,4,4,4,20,4,4,4,20,4,4,4,20,
-4,4,4,20,4,4,4,20,4,4,4,20,4,4,4,20,4,4,4,20,4,4,4,20,3,3,3,20,16,16,16,11,5,
-5,5,95,0,0,0,104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,26,0,0,
-0,118,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,
-0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,133,0,0,0,135,0,0,0,113,
-4,4,4,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-static Fl_RGB_Image image_folder(idata_folder, 24, 24, 4, 0);
-
 void flgui::cb_Import_i(Fl_Button*, void*) {
   button_cfg_import_cb();
 }
@@ -797,6 +732,41 @@ void flgui::cb_check_cfg_connect_i(Fl_Check_Button*, void*) {
 }
 void flgui::cb_check_cfg_connect(Fl_Check_Button* o, void* v) {
   ((flgui*)(o->parent()->parent()->parent()->user_data()))->cb_check_cfg_connect_i(o,v);
+}
+
+void flgui::cb_pause_level_i(Fl_Input*, void*) {
+  stream_pause_level_cb();
+}
+void flgui::cb_pause_level(Fl_Input* o, void* v) {
+  ((flgui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_pause_level_i(o,v);
+}
+
+void flgui::cb_pause_after_i(Fl_Input*, void*) {
+  stream_pause_after_cb();
+}
+void flgui::cb_pause_after(Fl_Input* o, void* v) {
+  ((flgui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_pause_after_i(o,v);
+}
+
+void flgui::cb_stream_apply_to_recording_i(Fl_Check_Button*, void*) {
+  stream_apply_to_recording_cb();
+}
+void flgui::cb_stream_apply_to_recording(Fl_Check_Button* o, void* v) {
+  ((flgui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_stream_apply_to_recording_i(o,v);
+}
+
+void flgui::cb_stream_show_on_visualizer_i(Fl_Check_Button*, void*) {
+  stream_show_on_visualizer_cb();
+}
+void flgui::cb_stream_show_on_visualizer(Fl_Check_Button* o, void* v) {
+  ((flgui*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_stream_show_on_visualizer_i(o,v);
+}
+
+void flgui::cb_stream_pause_enable_i(Fl_Check_Button*, void*) {
+  stream_pause_enable_cb();
+}
+void flgui::cb_stream_pause_enable(Fl_Check_Button* o, void* v) {
+  ((flgui*)(o->parent()->parent()->parent()->user_data()))->cb_stream_pause_enable_i(o,v);
 }
 
 void flgui::cb_input_rec_filename_i(Fl_Input*, void*) {
@@ -1221,6 +1191,7 @@ flgui::flgui() {
       Settings->selection_color((Fl_Color)41);
       { Fl_Group* o = new Fl_Group(0, 20, 300, 500, "Main");
         o->when(FL_WHEN_RELEASE_ALWAYS);
+        o->hide();
         { Fl_Group* o = new Fl_Group(15, 55, 265, 140, "Server Settings");
           o->box(FL_ENGRAVED_FRAME);
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
@@ -1279,7 +1250,6 @@ flgui::flgui() {
           { Fl_Button* o = new Fl_Button(249, 239, 25, 25);
             o->tooltip("Select log file");
             o->box(FL_ENGRAVED_BOX);
-            o->image(image_folder);
             o->callback((Fl_Callback*)cb_);
           } // Fl_Button* o
           o->end();
@@ -1391,7 +1361,6 @@ flgui::flgui() {
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(0, 19, 300, 450, "Stream");
-        o->hide();
         { Fl_Group* o = new Fl_Group(15, 55, 265, 65, "Update song name from file");
           o->box(FL_ENGRAVED_FRAME);
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
@@ -1404,7 +1373,6 @@ flgui::flgui() {
           { button_songfile_browse = new Fl_Button(250, 64, 25, 25);
             button_songfile_browse->tooltip("Select file that holds the current song name");
             button_songfile_browse->box(FL_ENGRAVED_FRAME);
-            button_songfile_browse->image(image_folder);
             button_songfile_browse->callback((Fl_Callback*)cb_button_songfile_browse);
           } // Fl_Button* button_songfile_browse
           { check_song_update_active = new Fl_Check_Button(18, 91, 152, 25, "Activate");
@@ -1432,12 +1400,46 @@ flgui::flgui() {
           } // Fl_Button* o
           o->end();
         } // Fl_Group* o
-        { check_cfg_connect = new Fl_Check_Button(15, 202, 159, 18, "Start streaming at startup");
+        { check_cfg_connect = new Fl_Check_Button(15, 199, 255, 24, "Start streaming at startup");
           check_cfg_connect->tooltip("Connect automatically to a server at startup");
           check_cfg_connect->down_box(FL_DOWN_BOX);
           check_cfg_connect->callback((Fl_Callback*)cb_check_cfg_connect);
         } // Fl_Check_Button* check_cfg_connect
+        { stream_control = new Fl_Group(14, 261, 266, 174, "Stream Control");
+          stream_control->labeltype(FL_NO_LABEL);
+          stream_control->deactivate();
+          { pause_level = new Fl_Input(15, 343, 155, 23, "Threshold (dB)");
+            pause_level->tooltip("The threshold below which the stream (or recording) is paused once a certain \
+amout of time has passed. The level is checked before applying gain");
+            pause_level->callback((Fl_Callback*)cb_pause_level);
+            pause_level->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+            this->pause_level->value("200");
+          } // Fl_Input* pause_level
+          { pause_after = new Fl_Input(15, 396, 155, 23, "Pause after (ms)");
+            pause_after->tooltip("Time that needs to pass after the level drop before the stream is paused");
+            pause_after->callback((Fl_Callback*)cb_pause_after);
+            pause_after->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+          } // Fl_Input* pause_after
+          { stream_apply_to_recording = new Fl_Check_Button(15, 261, 255, 23, "Apply to recording");
+            stream_apply_to_recording->tooltip("Apply the same effect of stream pausing to recording");
+            stream_apply_to_recording->down_box(FL_DOWN_BOX);
+            stream_apply_to_recording->callback((Fl_Callback*)cb_stream_apply_to_recording);
+          } // Fl_Check_Button* stream_apply_to_recording
+          { stream_show_on_visualizer = new Fl_Check_Button(15, 291, 255, 25, "Show on visualizer");
+            stream_show_on_visualizer->tooltip("Shows the outgoing stream level instead of the input level");
+            stream_show_on_visualizer->down_box(FL_DOWN_BOX);
+            stream_show_on_visualizer->callback((Fl_Callback*)cb_stream_show_on_visualizer);
+          } // Fl_Check_Button* stream_show_on_visualizer
+          stream_control->end();
+        } // Fl_Group* stream_control
+        { stream_pause_enable = new Fl_Check_Button(15, 230, 255, 25, "Enable stream pausing");
+          stream_pause_enable->tooltip("If enabled the stream will be paused once the input audio level falls below a\
+ certain threshold");
+          stream_pause_enable->down_box(FL_DOWN_BOX);
+          stream_pause_enable->callback((Fl_Callback*)cb_stream_pause_enable);
+        } // Fl_Check_Button* stream_pause_enable
         o->end();
+        Fl_Group::current()->resizable(o);
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(0, 19, 300, 450, "Record");
         o->hide();
@@ -1456,7 +1458,6 @@ flgui::flgui() {
         { button_rec_browse = new Fl_Button(255, 106, 25, 25);
           button_rec_browse->tooltip("Select recording directory");
           button_rec_browse->box(FL_ENGRAVED_BOX);
-          button_rec_browse->image(image_folder);
           button_rec_browse->callback((Fl_Callback*)cb_button_rec_browse);
         } // Fl_Button* button_rec_browse
         { Fl_Group* o = new Fl_Group(15, 164, 265, 57, "Split file");
@@ -1524,6 +1525,7 @@ flgui::flgui() {
         o->end();
       } // Fl_Group* o
       Settings->end();
+      Fl_Group::current()->resizable(Settings);
     } // Fl_Tabs* Settings
     window_cfg->size_range(280, 380, 330, 380);
     window_cfg->end();

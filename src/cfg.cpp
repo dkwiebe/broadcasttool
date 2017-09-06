@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
+#include <stdexcept>
 
 #include "config.h"
 
@@ -24,6 +25,7 @@
 #include "flgui.h"
 #include "util.h"
 #include "fl_funcs.h"
+#include "FLTK/fl_funcs.h"
 
 #ifdef _WIN32
  const char CONFIG_FILE[] = "buttrc";
@@ -127,6 +129,19 @@ int cfg_write_file(char *path)
             cfg.audio.buffer_ms
            );
 
+    fprintf(cfg_fd,
+            "[stream]\n"
+            "pause_enabled = %d\n"
+            "pause_level = %f\n"
+            "show_on_visualizer = %d\n"
+            "apply_to_recording = %d\n"
+            "pause_after = %lu\n\n",
+            cfg.stream.pause_enabled,
+            cfg.stream.pause_level,
+            cfg.stream.show_on_visualizer,
+            cfg.stream.apply_to_recording,
+            cfg.stream.pause_after);
+
     fprintf(cfg_fd, 
             "[record]\n"
             "bitrate = %d\n"
@@ -224,6 +239,7 @@ int cfg_write_file(char *path)
 
     }
 
+    fflush(cfg_fd);
     fclose(cfg_fd);
 
     snprintf(info_buf, sizeof(info_buf), "Config written to %s", path);
@@ -262,6 +278,19 @@ int cfg_set_values(char *path)
     cfg.audio.pcm_list   = snd_get_devices(&cfg.audio.dev_count);
 
     cfg.audio.resample_mode  = cfg_get_int("audio", "resample_mode");
+
+    cfg.stream.apply_to_recording = cfg_get_int("stream", "apply_to_recording");
+    cfg.stream.show_on_visualizer = cfg_get_int("stream", "show_on_visualizer");
+    cfg.stream.pause_enabled      = cfg_get_int("stream", "pause_enabled");
+    cfg.stream.pause_level        = cfg_get_float("stream", "pause_level");
+
+    try {
+        cfg.stream.pause_after = cfg_get_ulong("stream", "pause_after");
+    } catch (const std::exception &e) {
+        print_info(e.what(), 0);
+        cfg.stream.pause_after = 2000;
+    }
+
     
     if(cfg.audio.dev_num < 0)
         cfg.audio.dev_num = 0;
@@ -569,6 +598,7 @@ int cfg_create_default(void)
 
 
     fprintf(cfg_fd, "#This is a configuration file for butt (broadcast using this tool)\n\n");
+    
     fprintf(cfg_fd, 
             "[main]\n"
             "server =\n"
@@ -583,7 +613,7 @@ int cfg_create_default(void)
             "gain = 1.0\n"
             "connect_at_startup = 0\n\n"
            );
-
+    
     fprintf(cfg_fd,
             "[audio]\n"
             "device = default\n"
@@ -595,6 +625,15 @@ int cfg_create_default(void)
             "aac_aot = 5\n" // aac+ v1
             "buffer_ms = 50\n\n"
            );
+
+    fprintf(cfg_fd,
+            "[stream]\n"
+            "pause_enabled = 0\n"
+            "pause_level = 1.5\n"
+                    "show_on_visualizer = 1\n"
+                    "apply_to_recording = 1\n"
+                    "pause_after = 2000\n\n");
+
 
     fprintf(cfg_fd,
             "[record]\n"
@@ -615,7 +654,8 @@ int cfg_create_default(void)
             "ontop = 0\n"
             "lcd_auto = 0\n\n"
             );
-
+    
+    fflush(cfg_fd);
     fclose(cfg_fd);
 
     return 0;

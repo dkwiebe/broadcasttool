@@ -109,6 +109,24 @@ typedef struct
 
     struct
     {
+        // If true, the data stream is paused when the audio level drops
+        // and stays below the pause_level for the duration of pause_after
+        bool pause_enabled;
+
+        // Audio level below which the stream is paused if the input stream
+        // stays below it for the duration of pause_after
+        float pause_level;
+
+        // The number of milliseconds for which the input audio level has to stay
+        // below the pause_level for the stream to be paused
+        unsigned long pause_after;
+
+        bool show_on_visualizer;
+        bool apply_to_recording;
+    } stream;
+
+    struct
+    {
         int channel;
         int bitrate;
         int quality;

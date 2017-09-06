@@ -36,6 +36,13 @@ int rb_init(struct ringbuf *rb, unsigned int len)
 	return 0;
 }
 
+void rb_clear(struct ringbuf *rb)
+{
+	rb->w_ptr = rb->buf;
+	rb->r_ptr = rb->buf;
+	rb->full  = 0;
+}
+
 int rb_filled(struct ringbuf *rb)
 {
 	int filled;

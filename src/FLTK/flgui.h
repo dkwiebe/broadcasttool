@@ -262,6 +262,32 @@ private:
   inline void cb_check_cfg_connect_i(Fl_Check_Button*, void*);
   static void cb_check_cfg_connect(Fl_Check_Button*, void*);
 public:
+  Fl_Group *stream_control;
+  Fl_Input *pause_level;
+private:
+  inline void cb_pause_level_i(Fl_Input*, void*);
+  static void cb_pause_level(Fl_Input*, void*);
+public:
+  Fl_Input *pause_after;
+private:
+  inline void cb_pause_after_i(Fl_Input*, void*);
+  static void cb_pause_after(Fl_Input*, void*);
+public:
+  Fl_Check_Button *stream_apply_to_recording;
+private:
+  inline void cb_stream_apply_to_recording_i(Fl_Check_Button*, void*);
+  static void cb_stream_apply_to_recording(Fl_Check_Button*, void*);
+public:
+  Fl_Check_Button *stream_show_on_visualizer;
+private:
+  inline void cb_stream_show_on_visualizer_i(Fl_Check_Button*, void*);
+  static void cb_stream_show_on_visualizer(Fl_Check_Button*, void*);
+public:
+  Fl_Check_Button *stream_pause_enable;
+private:
+  inline void cb_stream_pause_enable_i(Fl_Check_Button*, void*);
+  static void cb_stream_pause_enable(Fl_Check_Button*, void*);
+public:
   Fl_Input *input_rec_filename;
 private:
   inline void cb_input_rec_filename_i(Fl_Input*, void*);

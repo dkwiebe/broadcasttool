@@ -30,8 +30,10 @@
 #include <FL/fl_ask.H>
 #include <FL/Fl_Color_Chooser.H>
 #include <samplerate.h>
+#include <stdexcept>
 
 #include "config.h"
+#include "../convert.h"
 
 #include "FL/Fl_My_Native_File_Chooser.H"
 #include "cfg.h"
@@ -48,10 +50,10 @@
 #include "util.h"
 #include "fl_timer_funcs.h"
 #include "fl_funcs.h"
+#include "../cfg.h"
 
 
-
-flgui *fl_g; 
+flgui *fl_g;
 int display_info = STREAM_TIME;
 
 pthread_t pt_connect;
@@ -2819,4 +2821,60 @@ void window_main_close_cb(void)
     }
 
     exit(0);
+}
+
+
+void stream_pause_enable_cb(void)
+{
+    bool enabled = cfg.stream.pause_enabled = fl_g->stream_pause_enable->value();
+
+    if (enabled)
+        fl_g->stream_control->activate();
+    else
+        fl_g->stream_control->deactivate();
+
+    unsaved_changes = 1;
+}
+
+void stream_show_on_visualizer_cb(void)
+{
+    cfg.stream.show_on_visualizer = fl_g->stream_show_on_visualizer->value();
+    unsaved_changes = 1;
+}
+
+void stream_apply_to_recording_cb(void)
+{
+    cfg.stream.apply_to_recording = fl_g->stream_apply_to_recording->value();
+    unsaved_changes = 1;
+}
+
+void stream_pause_level_cb(void)
+{
+    const char *s_val = fl_g->pause_level->value();
+
+    try {
+        cfg.stream.pause_level = str_to_float(s_val);
+        fl_g->pause_level->color(0xFFFFFFFF);
+        fl_g->pause_level->redraw();
+    } catch (const std::invalid_argument &e) {
+        fl_g->pause_level->color(0xFFCCCCFF);
+        fl_g->pause_level->redraw();
+    }
+    unsaved_changes = 1;
+}
+
+
+void stream_pause_after_cb(void)
+{
+    const char *s_val = fl_g->pause_after->value();
+
+    try {
+        cfg.stream.pause_after = str_to_ulong(s_val);
+        fl_g->pause_after->color(0xFFFFFFFF);
+        fl_g->pause_after->redraw();
+    } catch (const std::invalid_argument &e) {
+        fl_g->pause_after->color(0xFFCCCCFF);
+        fl_g->pause_after->redraw();
+    }
+    unsaved_changes = 1;
 }

@@ -102,5 +102,11 @@ void lcd_rotate(void*);
 void ILM216_cb(void);
 void window_main_close_cb(void);
 
+void stream_pause_enable_cb(void);
+void stream_pause_level_cb(void);
+void stream_pause_after_cb(void);
+void stream_apply_to_recording_cb(void);
+void stream_show_on_visualizer_cb(void);
+
 #endif
 

@@ -22,6 +22,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <samplerate.h>
+#include <chrono>
 
 #ifdef _WIN32
  #include <windows.h>
@@ -507,6 +508,148 @@ void* snd_rec_thread(void *data)
     return NULL;
 }
 
+
+int find_peak_in_buf(short *buf,
+                     size_t buf_len,
+                     int channels,
+                     float *out_left,
+                     float *out_right)
+{
+    int left  = 0;
+    int right = 0;
+    int peak;
+
+    for (int i = 0; i < buf_len; i += channels) {
+        peak  = abs(buf[i]);
+        left  = peak > left ? peak : left;
+        peak  = abs(buf[i + channels - 1]);
+        right = peak > right ? peak : right;
+    }
+
+    if (left == 0 && right == 0)
+        return -1;
+
+    *out_left  = -(20 * log10(32786 / (float) left));
+    *out_right = -(20 * log10(32786 / (float) right));
+
+    return 0;
+}
+
+
+int write_to_ring_buf(struct ringbuf  *rb,
+                      int              samplerate,
+                      unsigned long    frame_count,
+                      SRC_DATA         *srconv,
+                      SRC_STATE        *srconv_state,
+                      char             *codec)
+{
+    if ((!strcmp(codec, "opus")) && (samplerate != 48000)) {
+        samplerate = 48000;
+
+        srconv->end_of_input  = 0;
+        srconv->src_ratio     = (float) samplerate / cfg.audio.samplerate;
+        srconv->input_frames  = frame_count;
+        srconv->output_frames = frame_count * cfg.audio.channel * (srconv->src_ratio + 1) * sizeof(float);
+
+        src_short_to_float_array(pa_pcm_buf,
+                                 srconv->data_in,
+                                 frame_count * cfg.audio.channel);
+
+        char tmp_buf[16 * pa_frames * 2 * sizeof(short)];
+
+        src_process(srconv_state, srconv);
+
+        src_float_to_short_array(srconv->data_out,
+                                 (short*) tmp_buf,
+                                 srconv->output_frames_gen * cfg.audio.channel);
+
+        rb_write(rb,
+                 (char *) tmp_buf,
+                 srconv->output_frames_gen * sizeof(short) * cfg.audio.channel);
+    } else {
+        rb_write(rb,
+                 (char *) pa_pcm_buf,
+                 frame_count * sizeof(short) * cfg.audio.channel);
+    }
+    return samplerate;
+}
+
+
+void apply_gain(short *buf, float gain)
+{
+    if (gain == 1)
+        return;
+
+    for (int i = 0; i < framepacket_size; i++) {
+        buf[i] *= gain;
+    }
+}
+
+
+enum StreamAction {A_STREAM, A_PAUSE};
+
+
+using TimeP = std::chrono::time_point<std::chrono::steady_clock>;
+using Clock = std::chrono::steady_clock;
+
+
+TimeP start_time;
+TimeP end_time;
+
+
+bool stream_paused = false;
+bool timer_active  = false;
+
+
+enum StreamAction get_stream_action()
+{
+    float lpeak = 0;
+    float rpeak = 0;
+    find_peak_in_buf(pa_pcm_buf, framepacket_size, cfg.audio.channel, &lpeak, &rpeak);
+
+    float level = cfg.stream.pause_level;
+
+    if (stream_paused) {
+        // The level has risen above the threshold. Resume stream.
+        if (lpeak >= level || rpeak >= level) {
+            stream_paused = false;
+            return A_STREAM;
+        } else { // Peak still below threshold. Don't write the stream.
+            return A_PAUSE;
+        }
+    } else {
+        // The peak has fallen under the threshold
+        if (lpeak < level && rpeak < level) {
+            // The timer is active. Figure out for how long, and if
+            // longer than the pause time, stop stream and timer.
+            if (timer_active) {
+                end_time = Clock::now();
+                auto time_delta = end_time - start_time;
+                auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_delta);
+
+                // Level was below the threshold for the full duration of the
+                // pause_after period. Turn off the timer and stop the stream.
+                if (ms.count() >= cfg.stream.pause_after) {
+                    stream_paused = true;
+                    timer_active  = false;
+                    rb_clear(&stream_rb);
+                    return A_PAUSE;
+                }
+            } else { // First packet under the threshold. Activate timer.
+                start_time = Clock::now();
+                timer_active = true;
+            }
+        } else {
+            // Deactivate an invalid timer that could have been started by
+            // a previous packet.
+            if (timer_active)
+                timer_active = false;
+        }
+    }
+    return A_STREAM;
+}
+
+
 //this function is called by PortAudio when new audio data arrived
 int snd_callback(const void *input,
                  void *output,
@@ -515,94 +658,57 @@ int snd_callback(const void *input,
                  PaStreamCallbackFlags statusFlags,
                  void *userData)
 {
-    int i;
-    int error;
-    int samplerate_out;
-    bool convert_stream = false;
-    bool convert_record = false;
-    
-    char stream_buf[16 * pa_frames*2 * sizeof(short)];
-    char record_buf[16 * pa_frames*2 * sizeof(short)];
-
-
     memcpy(pa_pcm_buf, input, frameCount*cfg.audio.channel*sizeof(short));
-    samplerate_out = cfg.audio.samplerate;
 
-    if (cfg.main.gain != 1)
-    {
-        for(i = 0; i < framepacket_size; i++)
-        {
-            pa_pcm_buf[i] *= cfg.main.gain;
-        }
-    }
-	
-	if (streaming)
-	{
-        if ((!strcmp(cfg.audio.codec, "opus")) && (cfg.audio.samplerate != 48000))
-        {
-            convert_stream = true;
-            samplerate_out = 48000;
-        }
+    enum StreamAction action = A_STREAM;
 
-        if (convert_stream == true)
-        {
-            srconv_stream.end_of_input = 0;
-            srconv_stream.src_ratio = (float)samplerate_out/cfg.audio.samplerate;
-            srconv_stream.input_frames = frameCount;
-            srconv_stream.output_frames = frameCount*cfg.audio.channel * (srconv_stream.src_ratio+1) * sizeof(float);
+    if (cfg.stream.pause_enabled)
+        action = get_stream_action();
 
-            src_short_to_float_array((short*)pa_pcm_buf, srconv_stream.data_in, frameCount*cfg.audio.channel);
 
-            //The actual resample process
-            src_process(srconv_state_stream, &srconv_stream);
+	apply_gain(pa_pcm_buf, cfg.main.gain);
 
-            src_float_to_short_array(srconv_stream.data_out, (short*)stream_buf, srconv_stream.output_frames_gen*cfg.audio.channel);
 
-            rb_write(&stream_rb, (char*)stream_buf, srconv_stream.output_frames_gen*sizeof(short)*cfg.audio.channel);
-        }
-        else
-            rb_write(&stream_rb, (char*)pa_pcm_buf, frameCount*sizeof(short)*cfg.audio.channel);
+    int samplerate_out = cfg.audio.samplerate;
+	if (streaming && action == A_STREAM) {
+        samplerate_out = write_to_ring_buf(&stream_rb,
+                                           samplerate_out,
+                                           frameCount,
+                                           &srconv_stream,
+                                           srconv_state_stream,
+                                           cfg.audio.codec);
 
-		pthread_cond_signal(&stream_cond);
+        pthread_cond_signal(&stream_cond);
 	}
 
-	if(recording)
-	{
+	if (recording) {
+        switch (action) {
+            case A_PAUSE: {
+                if (cfg.stream.pause_enabled && cfg.stream.apply_to_recording)
+                    break;
+            }
+            case A_STREAM: {
+                write_to_ring_buf(&rec_rb,
+                                  samplerate_out,
+                                  frameCount,
+                                  &srconv_record,
+                                  srconv_state_record,
+                                  cfg.rec.codec);
 
-        if ((!strcmp(cfg.rec.codec, "opus")) && (cfg.audio.samplerate != 48000))
-        {
-            convert_record = true;
-            samplerate_out = 48000;
+                pthread_cond_signal(&rec_cond);
+            }
         }
-
-        if (convert_record == true)
-        {
-            srconv_record.end_of_input = 0;
-            srconv_record.src_ratio = (float)samplerate_out/cfg.audio.samplerate;
-            srconv_record.input_frames = frameCount;
-            srconv_record.output_frames = frameCount*cfg.audio.channel * (srconv_record.src_ratio+1) * sizeof(float);
-
-            src_short_to_float_array((short*)pa_pcm_buf, srconv_record.data_in, frameCount*cfg.audio.channel);
-
-            //The actual resample process
-            src_process(srconv_state_record, &srconv_record);
-
-            src_float_to_short_array(srconv_record.data_out, (short*)record_buf, srconv_record.output_frames_gen*cfg.audio.channel);
-
-            rb_write(&rec_rb, (char*)record_buf, srconv_record.output_frames_gen*sizeof(short)*cfg.audio.channel);
-
-        }
-        else
-            rb_write(&rec_rb, (char*)pa_pcm_buf, frameCount*sizeof(short)*cfg.audio.channel);
-
-		pthread_cond_signal(&rec_cond);
 	}
     
     //tell vu_update() that there is new audio data
-    pa_new_frames = 1;
+    if (cfg.stream.pause_enabled && cfg.stream.show_on_visualizer && action == A_PAUSE)
+        pa_new_frames = 0;
+    else
+        pa_new_frames = 1;
 
     return 0;
 }
+
 
 void snd_update_vu(void)
 {

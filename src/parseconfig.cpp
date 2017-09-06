@@ -10,8 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <FL/fl_utf8.h> // for fl_fl_fopen(void)
+#include <stdexcept>
+#include <cerrno>
 
 #include "parseconfig.h"
+#include "convert.h"
 
 struct CFG_ENTRIES {
     unsigned int  ent_count;
@@ -205,3 +208,24 @@ cfg_get_float(const char *sec, const char *ent)
     return atof(val);
 }
 
+#define ERRB_BUFF_LENGTH 200
+
+char errb[ERRB_BUFF_LENGTH];
+
+unsigned long
+cfg_get_ulong(const char *section, const char *entry)
+{
+    char *s_value = cfg_get_str(section, entry);
+
+    if (s_value == NULL) {
+        snprintf(errb, ERRB_BUFF_LENGTH, "Error: Value not found for: section=%s, entry=%s",
+                 section, entry);
+        throw std::invalid_argument(errb);
+    }
+
+    try {
+        return str_to_ulong(s_value);
+    } catch (const std::invalid_argument &e) {
+        throw;
+    }
+}

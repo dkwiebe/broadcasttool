@@ -36,6 +36,7 @@
 #include "shoutcast.h"
 #include "icecast.h"
 #include "strfuncs.h"
+#include "../cfg.h"
 
 
 void fill_cfg_widgets(void)
@@ -180,6 +181,24 @@ void fill_cfg_widgets(void)
         fl_g->window_cfg->stay_on_top(1);
     }
     fl_g->check_gui_lcd_auto->value(cfg.gui.lcd_auto);
+
+    // Stream
+    fl_g->stream_pause_enable->value(cfg.stream.pause_enabled);
+    fl_g->stream_apply_to_recording->value(cfg.stream.apply_to_recording);
+    fl_g->stream_show_on_visualizer->value(cfg.stream.show_on_visualizer);
+
+    if (cfg.stream.pause_enabled)
+        fl_g->stream_control->activate();
+    else
+        fl_g->stream_control->deactivate();
+
+    char number[30];
+
+    snprintf(number, 30, "%f", cfg.stream.pause_level);
+    fl_g->pause_level->value(number);
+
+    snprintf(number, 30, "%lu", cfg.stream.pause_after);
+    fl_g->pause_after->value(number);
 }
 
 //Updates the samplerate drop down menu for the audio

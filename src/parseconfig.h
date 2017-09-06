@@ -10,6 +10,7 @@ char*  cfg_get_str(const char *sec, const char *ent);
 int    cfg_get_int(const char *sec, const char *ent);
 float  cfg_get_float(const char *sec, const char *ent);
 
+unsigned long cfg_get_ulong(const char *section, const char *entry);
 
 #endif /* PARSECONFIG_H */
 
