@@ -1,6 +1,4 @@
-////
-execute as "asciidoc manual.txt"
-////
+This is a copy of https://sourceforge.net/projects/butt/. 
 
 = butt (0.1.15) Manual 
 :author: Daniel Nöthen
