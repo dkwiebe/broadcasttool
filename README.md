@@ -1,6 +1,6 @@
-This is a copy of https://sourceforge.net/projects/butt/. 
+This is a copy of https://sourceforge.net/projects/butt/. The authors homepage is at http://danielnoethen.de/.  I have this copy here to keep track of a few changes we've been working on.
 
-= butt (0.1.15) Manual 
+# butt (0.1.15) Manual 
 :author: Daniel Nöthen
 :doctype: book 
 :toc2:
@@ -9,7 +9,7 @@ This is a copy of https://sourceforge.net/projects/butt/.
 :email: butt at danielnoethen dot de
 :encoding: utf-8
 
-== About
+# About
 butt (broadcast using this tool) is an easy to use, multi OS streaming tool. +
 It supports ShoutCast and IceCast and runs on Linux, MacOS and Windows. +
 The main purpose of butt is to stream live audio data from your computers Mic or Line input +
@@ -17,21 +17,21 @@ to an Shoutcast or Icecast server. Recording is also possible. +
 It is NOT intended to be a server by itself or automatically stream a set of audio files. +
 
 
-=== Installing from precompiled packages
-.OS X: 
+# Installing from precompiled packages
+## OS X: 
 Mount the *butt-<version>.dmg* by double clicking and  +
 drop the butt file to the Applications folder. +
 
-.Windows: 
+## Windows: 
 Just run the *butt-<version>-setup.exe* as usual and go through the +
 installer pages. +
 The default installation path might be unusual, but this way it is possible to install +
 butt without administration rights. +
 
-.Ubuntu Linux (and its derivatives):
+## Ubuntu Linux (and its derivatives):
 Before you install butt on Ubuntu, make sure you have the following packages installed on +
-your system: `libportaudio2`, `libvorbis0a`, `libfltk1.3`, `libmp3lame0`, `libflac8`, `libsamplerate0` and +
-`libopus0`.
+your system: 'libportaudio2', 'libvorbis0a', 'libfltk1.3', 'libmp3lame0', 'libflac8', 'libsamplerate0' and +
+'libopus0'.
 
 On Ubuntu you can install these packages by running the following command in your terminal:
 +
@@ -46,9 +46,9 @@ sudo dpkg --install butt_<version>-0ubuntu1_amd64.deb
 ----
 
 
-=== Installing from source
+# Installing from source
 
-==== Windows
+### Windows
 Before butt can be compiled on Windows, you must first download http://www.msys2.org/[MSYS2] and install it. It +
 doesn't really matter where it's installed as long as you'll know where to find it. 
 
@@ -58,30 +58,30 @@ variables which determine the architecture of the build. For our purposes we won
 shell, we'll only look at `mingw32` (thought which we build 32 bit butt) and `mingw64` (though which we build 64 bit butt). In other words, which shell we use depends on what kind of executable we want to build.
 
 
-===== Building
+#### Building
 To make a *32 bit* build of butt in these four steps:
-. run the `mingw32.exe` shell 
-. navigate to the *butt project directory* inside the `mingw32.exe` shell
-. once there run the `./win-setup.sh` script to download and configure all dependencies for the 32 bit build
-. finally, run `./win-make.sh` script to build the project. The compiled project and its `.dll` dependencies are now stored in the `build/i686` directory inside the butt project directory
+. run the 'mingw32.exe' shell 
+. navigate to the *butt project directory* inside the 'mingw32.exe' shell
+. once there run the './win-setup.sh' script to download and configure all dependencies for the 32 bit build
+. finally, run './win-make.sh' script to build the project. The compiled project and its '.dll' dependencies are now stored in the 'build/i686' directory inside the butt project directory
 
-Similarly, to make a *64 bit* build of butt we follow the same steps except that this time we use the `mingw64.exe` shell instead:
-. we run the `mingw64.exe` shell 
+Similarly, to make a *64 bit* build of butt we follow the same steps except that this time we use the 'mingw64.exe' shell instead:
+. we run the 'mingw64.exe' shell 
 . using the shell we navigate to the *butt project directory*
-. once there, we run the `./win-setup.sh` script to download and configure all dependencies for the 64 bit build
-. finally, we run `./win-make.sh` script to build the project. The compiled project and its `.dll` dependencies can now be found in the `build/x86_64` directory inside the butt project directory
+. once there, we run the './win-setup.sh' script to download and configure all dependencies for the 64 bit build
+. finally, we run './win-make.sh' script to build the project. The compiled project and its '.dll' dependencies can now be found in the 'build/x86_64' directory inside the butt project directory
 
 [NOTE]
-`./win-setup.sh` only needs to be run once in each shell.
+'./win-setup.sh' only needs to be run once in each shell.
 
 [NOTE]
-When you start a shell your working directory will be set to a unix style home `/home/{username}`. To navigate away from this directory, simply type `cd c:`, or any other drive letter to go back to a Windows directory.
+When you start a shell your working directory will be set to a unix style home '/home/{username}'. To navigate away from this directory, simply type 'cd c:', or any other drive letter to go back to a Windows directory.
 
 [IMPORTANT]
-If you have already built butt for one architecture and now want to build for another, you must first run `make clean` command in the project root to clear previously generated objects, otherwise you might have a linking problem if the objects of different architectures get mixed up. 
+If you have already built butt for one architecture and now want to build for another, you must first run 'make clean' command in the project root to clear previously generated objects, otherwise you might have a linking problem if the objects of different architectures get mixed up. 
 
 
-==== Ubuntu Linux
+### Ubuntu Linux
 In addition to the packages mentioned above, compiling butt on Ubuntu requires additional development +
 packages: 'portaudio19-dev', 'libvorbis-dev', 'libfltk1.3-dev', 'libmp3lame-dev' 'libflac-dev', 'libsamplerate-dev' and 'libopus-dev'
 
@@ -125,7 +125,7 @@ sudo make install
 to install it. This final step is optional. You can still run the `butt` executable from the `src` directory without installing it.
 
 
-=== Quick start
+# Quick start
 When you start butt the first time, it will create a default configuration +
 file in in your home directory ('~/.buttrc') on Linux and OS X or at +
 'C:\Users\<username>\AppData\Roaming\buttrc' on Windows. +
@@ -137,7 +137,7 @@ Now fill in the input fields with the server data and click on the new [ADD]. +
 Adding Stream Infos is not necessary for connecting to a server.
 
 
-=== Configuration
+## Configuration
 The command line option +-c <path_to_file>+ allows you to define a new standard configuration path.  +
 This makes it possible to have multiple instances with different configurations +
 running. In case the file does not exists, butt will create a default file. +
@@ -151,7 +151,7 @@ CAUTION: If you use the -c command line option and import another configuration 
 import function, pressing [Save] will overwrite the file that was passed to the -c option.
 
 
-=== Main Window
+## Main Window
 The dot matrix display shows you the current state of the butt software. +
 The states are: idle, streaming, recording. +
 When in streaming and/or recording state you can cycle through the information by clicking on the display. +
@@ -174,7 +174,7 @@ It does not change the operating systems input volume setting. Instead, the inpu
 by the given factor. Thus adding to much gain will also add lots of noise. +
 
 
-=== Streaming
+## Streaming
 To start streaming just klick the play symbol. +
 butt will try to connect to the server until you press the stop symbol. +
 
@@ -207,7 +207,7 @@ This allows you to deliver more details of your stream station. +
 For example the genre of your music, description of your station, web address etc. +
 
 
-=== Recording
+## Recording
 butt is able to record and stream simultaneously in different bit rates. +
 For example you can stream with 96kbit and record with 192kbit. +
 Recording is possible in mp3, ogg/vorbis, ogg/opus, FLAC or wav. 
@@ -248,7 +248,7 @@ splitting is set to '15 minutes', the second file starts at '9:00' and the third
 at '9:15'.
 
 
-=== Uninstall
+## Uninstall
 .OS X: 
 Delete the *butt.app* from your 'Application' folder and +
 remove the configuration file from '/Users/<username>/.buttrc' +
@@ -265,7 +265,7 @@ Run +sudo make uninstall+ from the source tree. and +
 remove the configuration file from '/home/<username>/.buttrc' +
 
 
-== Contact
+## Contact
 butt at danielnoethen dot de
 
 
