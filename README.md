@@ -41,12 +41,12 @@ your system: 'libportaudio2', 'libvorbis0a', 'libfltk1.3', 'libmp3lame0', 'libfl
 
 On Ubuntu you can install these packages by running the following command in your terminal: 
 
-'sudo apt-get install libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0'
+`sudo apt-get install libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0`
 
 
 After these packages are successfully installed, you can install the butt package using the 'dpkg' command:
 
-'sudo dpkg --install butt_<version>-0ubuntu1_amd64.deb'
+`sudo dpkg --install butt_<version>-0ubuntu1_amd64.deb`
 
 
 
@@ -90,41 +90,31 @@ In addition to the packages mentioned above, compiling butt on Ubuntu requires a
 packages: 'portaudio19-dev', 'libvorbis-dev', 'libfltk1.3-dev', 'libmp3lame-dev' 'libflac-dev', 'libsamplerate-dev' and 'libopus-dev'
 
 All of these can be installed by running the following command in your terminal:
-----
-sudo apt-get install portaudio19-dev libvorbis-dev libfltk1.3-dev libmp3lame-dev libflac-dev libsamplerate-dev libopus-dev libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0
-----
+
+`sudo apt-get install portaudio19-dev libvorbis-dev libfltk1.3-dev libmp3lame-dev libflac-dev libsamplerate-dev libopus-dev libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0`
 
 Now that these packages are installed you can extract the source code archive using the command line:
-+  
-----
-tar -xzf butt-<version>.tar.gz
-----
-+
+
+`tar -xzf butt-<version>.tar.gz`
+
 or you can use a graphical tool of your choice.
 
 After the sources are extracted, navigate to the project root inside your terminal and run the following commands:
 
-----
-./autogen.sh
-----
+`./autogen.sh`
 
 then
 
-----
-./configure
-----
+`./configure`
 
 then
 
-----
-make
-----
+`make`
 
 to build the project. And finally
 
-----
-sudo make install
-----
+`sudo make install`
+
 
 to install it. This final step is optional. You can still run the `butt` executable from the `src` directory without installing it.
 
