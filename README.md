@@ -2,25 +2,31 @@ This is a copy of https://sourceforge.net/projects/butt/. The authors homepage i
 
 # butt (0.1.15) Manual 
 :author: Daniel Nöthen
-:doctype: book 
+
+:doctype: book
+
 :toc2:
+
 :numbered:
+
 :lang: en
+
 :email: butt at danielnoethen dot de
+
 :encoding: utf-8
 
+
 # About
-butt (broadcast using this tool) is an easy to use, multi OS streaming tool. +
-It supports ShoutCast and IceCast and runs on Linux, MacOS and Windows. +
-The main purpose of butt is to stream live audio data from your computers Mic or Line input +
-to an Shoutcast or Icecast server. Recording is also possible. +
-It is NOT intended to be a server by itself or automatically stream a set of audio files. +
+butt (broadcast using this tool) is an easy to use, multi OS streaming tool. 
+It supports ShoutCast and IceCast and runs on Linux, MacOS and Windows. 
+The main purpose of butt is to stream live audio data from your computers Mic or Line input 
+to an Shoutcast or Icecast server. Recording is also possible. 
+It is NOT intended to be a server by itself or automatically stream a set of audio files. 
 
 
 # Installing from precompiled packages
 ## OS X: 
-Mount the *butt-<version>.dmg* by double clicking and  +
-drop the butt file to the Applications folder. +
+Mount the *butt-<version>.dmg* by double clicking and drop the butt file to the Applications folder. 
 
 ## Windows: 
 Just run the *butt-<version>-setup.exe* as usual and go through the +
@@ -33,17 +39,15 @@ Before you install butt on Ubuntu, make sure you have the following packages ins
 your system: 'libportaudio2', 'libvorbis0a', 'libfltk1.3', 'libmp3lame0', 'libflac8', 'libsamplerate0' and +
 'libopus0'.
 
-On Ubuntu you can install these packages by running the following command in your terminal:
-+
-----
-sudo apt-get install libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0
-----
+On Ubuntu you can install these packages by running the following command in your terminal: 
 
-After these packages are successfully installed, you can install the butt package using the `dpkg` command:
-+
-----
-sudo dpkg --install butt_<version>-0ubuntu1_amd64.deb
-----
+'sudo apt-get install libportaudio2 libvorbis0a libfltk1.3 libmp3lame0 libflac8 libsamplerate0 libopus0'
+
+
+After these packages are successfully installed, you can install the butt package using the 'dpkg' command:
+
+'sudo dpkg --install butt_<version>-0ubuntu1_amd64.deb'
+
 
 
 # Installing from source
